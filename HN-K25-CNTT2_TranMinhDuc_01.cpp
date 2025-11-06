@@ -1,0 +1,228 @@
+#include <stdio.h>
+#define MAX 100
+
+int main() {
+    int arr[MAX];
+    int n = 0, choice;
+    int i, j, temp;
+    int sum, indexAdd, valueAdd, indexDel, indexUpdate, valueUpdate, x;
+    float avg;
+    int flag08;
+
+    do {
+        printf("1. Nhap so luong va gia tri tung phan tu cho mang.\n");
+        printf("2. In ra cac gia tri phan tu trong mang.\n");
+        printf("3. In cac so la so nguyen to co trong mang.\n");
+        printf("4. Tim gia tri nho nhat trong mang.\n");
+        printf("5. Them moi mot phan tu vao vi tri cu the.\n");
+        printf("6. Xoa phan tu tai vi tri bat ki trong mang.\n");
+        printf("7. Sap xep mang theo thu tu tang dan.\n");
+        printf("8. Kiem tra su ton tai cua phan tu co trong mang.\n");
+        printf("9. In mang sao cho toan bo so le dung truoc, so chan dung sau.\n");
+        printf("10.Sap xep mang theo thu tu nguoc lai.\n");
+        printf("11.Thoat Menu.\n");
+        printf("Moi ban chon option: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Nhap so luong phan tu cua mang (toi da %d): ", MAX);
+                scanf("%d", &n);
+                if (n < 1 || n > MAX) {
+                    printf("So luong phan tu khong hop le!\n");
+                    n = 0;
+                    break;
+                }
+                for (i = 0; i < n; i++) {
+                    printf("Nhap phan tu thu %d: ", i + 1);
+                    scanf("%d", &arr[i]);
+                }
+                break;
+
+            case 2:
+                if (n == 0)
+                    printf("Mang rong!\n");
+                else {
+                    printf("Mang hien tai: ");
+                    for (i = 0; i < n; i++)
+                        printf("%d ", arr[i]);
+                    printf("\n");
+                }
+                break;
+
+            case 3:
+                if (n == 0)
+                    printf("Mang rong!\n");
+                else {
+                    sum = 0;
+                    for (i = 0; i < n; i++)
+                        sum += arr[i];
+                    avg = (float)sum / n;
+                    printf("Tong cac phan tu: %d\n", sum);
+                    printf("Trung binh cong: %.2f\n", avg);
+                }
+                break;
+            
+            case 4:
+            	
+
+            case 5:
+                printf("Nhap vi tri muon chen (0 -> %d): ", n);
+                scanf("%d", &indexAdd);
+                if (indexAdd < 0 || indexAdd > n) {
+                    printf("Vi tri khong hop le!\n");
+                    break;
+                }
+                printf("Nhap gia tri muon chen: ");
+                scanf("%d", &valueAdd);
+                for (i = n; i > indexAdd; i--)
+                    arr[i] = arr[i - 1];
+                arr[indexAdd] = valueAdd;
+                n++;
+                printf("Da chen thanh cong!\n");
+                break;
+
+            case 6:
+                if (n == 0) {
+                    printf("Mang rong, khong co gi de xoa!\n");
+                    break;
+                }
+                printf("Nhap vi tri muon xoa (0 -> %d): ", n - 1);
+                scanf("%d", &indexDel);
+                if (indexDel < 0 || indexDel >= n) {
+                    printf("Vi tri khong hop le!\n");
+                    break;
+                }
+                for (i = indexDel; i < n - 1; i++)
+                    arr[i] = arr[i + 1];
+                n--;
+                printf("Da xoa phan tu o vi tri %d thanh cong!\n", indexDel);
+                break;
+
+            case 7:
+                if (n == 0) {
+                    printf("Mang rong, khong co gi de cap nhat!\n");
+                    break;
+                }
+                printf("Nhap vi tri muon cap nhat (0 -> %d): ", n - 1);
+                scanf("%d", &indexUpdate);
+                if (indexUpdate < 0 || indexUpdate >= n) {
+                    printf("Vi tri khong hop le!\n");
+                    break;
+                }
+                printf("Nhap gia tri moi: ");
+                scanf("%d", &valueUpdate);
+                arr[indexUpdate] = valueUpdate;
+                printf("Da cap nhat thanh cong!\n");
+                break;
+
+            case 8:
+                if (n == 0) {
+                    printf("Mang rong, khong co gi de tim!\n");
+                    break;
+                }
+                printf("Nhap gia tri muon tim kiem: ");
+                scanf("%d", &x);
+                flag08 = 0;
+                for (i = 0; i < n; i++) {
+                    if (arr[i] == x) {
+                        printf("Gia tri %d duoc tim thay tai vi tri arr[%d].\n", x, i);
+                        flag08 = 1;
+                    }
+                }
+                if (flag08 == 0)
+                    printf("Khong tim thay gia tri %d trong mang.\n", x);
+                break;
+
+            case 9:
+                if (n == 0) {
+                    printf("Mang rong!\n");
+                    break;
+                }
+
+                printf("\nChon kieu sap xep:\n");
+                printf("1. Bubble Sort (noi bot)\n");
+                printf("2. Selection Sort (chon truc tiep)\n");
+                printf("3. Insertion Sort (chen truc tiep)\n");
+                int sortChoice;
+                printf("Lua chon: ");
+                scanf("%d", &sortChoice);
+
+                if (sortChoice == 1) {
+                    for (i = 0; i < n - 1; i++) {
+                        for (j = 0; j < n - 1 - i; j++) {
+                            if (arr[j] > arr[j + 1]) {
+                                temp = arr[j];
+                                arr[j] = arr[j + 1];
+                                arr[j + 1] = temp;
+                            }
+                        }
+                    }
+                    printf("Da sap xep bang Bubble Sort.\n");
+                } 
+                else if (sortChoice == 2) {
+                    for (i = 0; i < n - 1; i++) {
+                        int minIndex = i;
+                        for (j = i + 1; j < n; j++) {
+                            if (arr[j] < arr[minIndex])
+                                minIndex = j;
+                        }
+                        temp = arr[i];
+                        arr[i] = arr[minIndex];
+                        arr[minIndex] = temp;
+                    }
+                    printf("Da sap xep bang Selection Sort.\n");
+                } 
+                else if (sortChoice == 3) {
+                    for (i = 1; i < n; i++) {
+                        temp = arr[i];
+                        j = i - 1;
+                        while (j >= 0 && arr[j] > temp) {
+                            arr[j + 1] = arr[j];
+                            j--;
+                        }
+                        arr[j + 1] = temp;
+                    }
+                    printf("Da sap xep bang Insertion Sort.\n");
+                } 
+                else {
+                    printf("Lua chon khong hop le!\n");
+                    break;
+                }
+
+                printf("Mang sau khi sap xep tang dan: ");
+                for (i = 0; i < n; i++)
+                    printf("%d ", arr[i]);
+                printf("\n");
+                break;
+
+            case 10: {
+                if (n == 0) {
+                    printf("Mang rong!\n");
+                    break;
+                }
+                int min = arr[0], max = arr[0];
+                for (i = 1; i < n; i++) {
+                    if (arr[i] < min) min = arr[i];
+                    if (arr[i] > max) max = arr[i];
+                }
+                printf("So nho nhat: %d\n", min);
+                printf("So lon nhat: %d\n", max);
+                printf("Hieu la: %d\n", max - min);
+                break;
+            }    
+                
+            case 11:
+                printf("Thoat chuong trinh.\n");
+                break;
+
+            default:
+                printf("Lua chon khong hop le!\n");
+                break;
+        }
+
+    } while (choice != 11);
+
+    return 0;
+}
+
